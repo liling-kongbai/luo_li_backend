@@ -1,8 +1,6 @@
 from typing import Any
 
 from base_structured_output_extractor import BaseStructuredOutputExtractor
-from langchain_core.language_models.chat_models import BaseChatModel
-from langchain_core.runnables.base import RunnableSequence
 
 from ...type import Intent, IntentClassification
 
@@ -28,8 +26,3 @@ class IntentClassifier(BaseStructuredOutputExtractor):
             'RoutineLayer': IntentClassification.RoutineLayer.value,
             'InferenceLayer': IntentClassification.InferenceLayer.value,
         }
-
-    def create_intent_classifier_chain(self, llm: BaseChatModel) -> RunnableSequence:
-        """创建意图分类器链"""
-
-        return IntentClassifier(llm).get_extractor_chain()
