@@ -8,3 +8,6 @@ wheels/
 
 # Virtual environments
 .venv
+
+# 洛璃后端
+logs/
