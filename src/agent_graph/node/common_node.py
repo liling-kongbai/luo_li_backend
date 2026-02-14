@@ -8,10 +8,7 @@ async def chat_node(state, config: RunnableConfig, llm: BaseChatModel) -> dict:
 
     chat_prompt_template = ChatPromptTemplate.from_messages(
         [
-            (
-                'system',
-                '{system_prompt}',
-            ),
+            ('system', '{system_prompt}'),
             MessagesPlaceholder(variable_name='messages'),
         ]
     )
