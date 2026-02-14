@@ -1,1 +1,1 @@
-from main_graph_type import Intent, IntentClassification
+from .main_graph_type import Intent, IntentClassification
