@@ -1,5 +1,6 @@
 from logging import DEBUG, INFO, FileHandler, Formatter, StreamHandler, getLogger
 from logging.handlers import QueueHandler, QueueListener
+from os import makedirs, path
 from queue import Queue
 
 
@@ -38,15 +39,18 @@ def set_async_logger(
     handlers.append(console_handler)
 
     if log_file_path:
+        log_file_dir = path.dirname(log_file_path)
+        if log_file_dir:
+            makedirs(log_file_dir, exist_ok=True)
         file_handler = FileHandler(log_file_path, encoding='utf-8')
         file_handler.setLevel(file_log_level)
         file_handler.setFormatter(formatter)
         handlers.append(file_handler)
 
     log_queue = Queue(-1)
-    queue_handler = QueueHandler(log_queue)
-    root_logger.addHandler(queue_handler)
+    log_handler = QueueHandler(log_queue)
+    root_logger.addHandler(log_handler)
 
-    listener = QueueListener(log_queue, *handlers, respect_handler_level=True)
-    listener.start()
-    return listener
+    log_listener = QueueListener(log_queue, *handlers, respect_handler_level=True)
+    log_listener.start()
+    return log_listener
